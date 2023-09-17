@@ -51,6 +51,7 @@
 		4AC572552AB73BE2007F1366 /* TagView */ = {
 			isa = PBXGroup;
 			children = (
+				4AC572662AB73D30007F1366 /* Layouts */,
 				4AC572562AB73BE2007F1366 /* TagViewApp.swift */,
 				4AC572582AB73BE2007F1366 /* ContentView.swift */,
 				4AC5725A2AB73BE5007F1366 /* Assets.xcassets */,
@@ -65,6 +66,13 @@
 				4AC5725D2AB73BE5007F1366 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4AC572662AB73D30007F1366 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Layouts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
