@@ -14,18 +14,30 @@ struct ContentView: View {
     ]
     // Selection
     @State private var selectedTags: [String] = []
+    // Adding Matched Geometry Effect
+    @Namespace private var animation
+    
     var body: some View {
         VStack(spacing: 0) {
             ScrollView(.horizontal) {
                 HStack(spacing: 12) {
                     ForEach(selectedTags, id: \.self) { tag in
                         TagView(tag, .pink, "checkmark")
+                            .matchedGeometryEffect(id: tag, in: animation)
+                            // Removing from Selected List
+                            .onTapGesture {
+                                withAnimation(.snappy) {
+                                    selectedTags.removeAll(where: { $0 == tag })
+                                }
+                            }
                     }
                 }
                 .padding(.horizontal, 15)
                 .frame(height: 35)
                 .padding(.vertical, 15)
             }
+            .scrollClipDisabled(true)
+            .scrollIndicators(.hidden)
             .overlay (content: {
                 if selectedTags.isEmpty {
                     Text("Select More than 3 Tags")
@@ -34,11 +46,27 @@ struct ContentView: View {
                 }
             })
             .background(.white)
+            .zIndex(1)
             
             ScrollView(.vertical) {
-                
+                TagLayout(alignment: .center, spacing: 10) {
+                    ForEach(tags.filter { !selectedTags.contains ($0) }, id: \.self) { tag in
+                        TagView(tag, .blue, "plus")
+                            .matchedGeometryEffect(id: tag, in: animation)
+                            .onTapGesture {
+                               // Adding to Selected Tag List
+                                withAnimation(.snappy) {
+                                    selectedTags.insert(tag, at: 0)
+                                }
+                            }
+                    }
+                }
+                .padding(15)
             }
+            .scrollClipDisabled(true)
+            .scrollIndicators(.hidden)
             .background(.black.opacity (0.05))
+            .zIndex(0)
             
             ZStack {
                 Button(action: {}, label: {
@@ -58,6 +86,7 @@ struct ContentView: View {
                 .padding()
             }
             .background(.white)
+            .zIndex(2)
         }
         .preferredColorScheme(.light)
     }
